@@ -1,0 +1,33 @@
+package it.euris.academy.centrosportivo.service.impl;
+
+import it.euris.academy.centrosportivo.entity.Contact;
+import it.euris.academy.centrosportivo.repository.ContactRepository;
+import it.euris.academy.centrosportivo.service.ContactService;
+
+import java.math.BigInteger;
+import java.util.List;
+
+public class ContactServiceImpl implements ContactService {
+
+    ContactRepository contactRepository;
+
+    @Override
+    public List<Contact> findAll() {
+        return contactRepository.findAll();
+    }
+
+    @Override
+    public Contact save(Contact contact) {
+        return contactRepository.save(contact);
+    }
+
+    @Override
+    public void deleteById(BigInteger idContact) {
+        contactRepository.deleteById(idContact);
+    }
+
+    @Override
+    public Contact findById(BigInteger idContact) {
+        return contactRepository.findById(idContact).orElse(Contact.builder().build());
+    }
+}
