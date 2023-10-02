@@ -5,6 +5,7 @@ import it.euris.academy.centrosportivo.dto.CustomerDTO;
 import it.euris.academy.centrosportivo.entity.Customer;
 import it.euris.academy.centrosportivo.service.CustomerService;
 import lombok.AllArgsConstructor;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
@@ -13,7 +14,9 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/customers")
+@SpringBootApplication
 public class CustomerController {
+
 
   CustomerService customerService;
 

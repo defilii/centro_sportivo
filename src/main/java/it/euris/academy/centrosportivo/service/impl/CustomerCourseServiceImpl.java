@@ -3,10 +3,13 @@ package it.euris.academy.centrosportivo.service.impl;
 import it.euris.academy.centrosportivo.entity.CustomerCourse;
 import it.euris.academy.centrosportivo.repository.CustomerCourseRepository;
 import it.euris.academy.centrosportivo.service.CustomerCourseService;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.util.List;
-
+@Service
+@AllArgsConstructor
 public class CustomerCourseServiceImpl implements CustomerCourseService {
 
     CustomerCourseRepository customerCourseRepository;

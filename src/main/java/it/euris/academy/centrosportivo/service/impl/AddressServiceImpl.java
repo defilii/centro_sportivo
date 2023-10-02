@@ -3,10 +3,13 @@ package it.euris.academy.centrosportivo.service.impl;
 import it.euris.academy.centrosportivo.entity.Address;
 import it.euris.academy.centrosportivo.repository.AddressRepository;
 import it.euris.academy.centrosportivo.service.AddressService;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.util.List;
-
+@Service
+@AllArgsConstructor
 public class AddressServiceImpl implements AddressService {
 
     AddressRepository addressRepository;

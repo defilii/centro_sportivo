@@ -20,7 +20,6 @@ import java.time.LocalDateTime;
 @Builder
 public class CustomerCourseDTO implements Dto{
 
-
     private Customer customer;
     private Course course;
 

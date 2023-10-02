@@ -4,10 +4,13 @@ import it.euris.academy.centrosportivo.entity.Course;
 import it.euris.academy.centrosportivo.entity.Customer;
 import it.euris.academy.centrosportivo.repository.CourseRepository;
 import it.euris.academy.centrosportivo.service.CourseService;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.util.List;
-
+@Service
+@AllArgsConstructor
 public class CourseServiceImpl implements CourseService {
 
     CourseRepository courseRepository;
