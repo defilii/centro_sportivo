@@ -39,23 +39,29 @@ class CustomerControllerTest {
 
     String firstName = "Mario";
     String lastName = "Rossi";
+    Long id = 1L;
+    String taxcode = "1234";
 
     Customer customer = Customer
-        .builder()
-        .build();
+            .builder()
+            .id(id)
+            .name(firstName)
+            .surname(lastName)
+            .tax_code(taxcode)
+            .build();
 
     List<Customer> customers = List.of(customer);
 
     when(customerService.findAll()).thenReturn(customers);
 
-    mockMvc.perform(MockMvcRequestBuilders.get("/customer"))
+    mockMvc.perform(MockMvcRequestBuilders.get("/customers"))
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(jsonPath("$").isArray())
         .andExpect(jsonPath("$.length()").value(1))
-        .andExpect(jsonPath("$[0].firstName").value(firstName))
-        .andExpect(jsonPath("$[0].lastName").value(lastName));
+        .andExpect(jsonPath("$[0].name").value(firstName))
+        .andExpect(jsonPath("$[0].surname").value(lastName));
   }
 
   @Test
@@ -63,10 +69,15 @@ class CustomerControllerTest {
 
     String firstName = "Mario";
     String lastName = "Rossi";
-    BigInteger id = BigInteger.valueOf(1);
+    Long id = 1L;
+    String taxcode = "1234";
 
     Customer customer = Customer
             .builder()
+            .id(id)
+            .name(firstName)
+            .surname(lastName)
+            .tax_code(taxcode)
             .build();
 
     List<Customer> customers = List.of(customer);
@@ -74,12 +85,10 @@ class CustomerControllerTest {
     when(customerService.findById(id)).thenReturn(customer);
 
 
-    mockMvc.perform(MockMvcRequestBuilders.get("/customers/v1/{id}", id)).
+    mockMvc.perform(MockMvcRequestBuilders.get("/customers/{id}", id)).
              andDo(print())
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-//            .andExpect(jsonPath("$").isArray()) fallirebbe perch[ non array
-//            .andExpect(jsonPath("$.length()").value(1))
             .andExpect(jsonPath("$.id").value(id))
     ;
   }
@@ -90,22 +99,28 @@ class CustomerControllerTest {
 
     String firstName = "Mario";
     String lastName = "Rossi";
+    Long id = 1L;
+    String taxcode = "1234";
 
     Customer customer = Customer
-        .builder()
-        .build();
+            .builder()
+            .id(id)
+            .name(firstName)
+            .surname(lastName)
+            .tax_code(taxcode)
+            .build();
 
     when(customerService.save(any())).thenReturn(customer);
 
-    mockMvc.perform(post("/customer")
+    mockMvc.perform(post("/customers")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(customer)))
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-        .andExpect(jsonPath("$.firstName").value(firstName))
-        .andExpect(jsonPath("$.lastName").value(lastName));
+        .andExpect(jsonPath("$.name").value(firstName))
+        .andExpect(jsonPath("$.surname").value(lastName));
   }
 
 

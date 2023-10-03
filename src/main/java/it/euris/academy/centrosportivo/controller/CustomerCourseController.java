@@ -15,7 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/customerscourses")
-@SpringBootApplication
 public class CustomerCourseController {
 
     CustomerCourseService customerCourseService;

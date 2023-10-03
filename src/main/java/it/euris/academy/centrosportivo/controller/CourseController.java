@@ -13,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/courses")
-@SpringBootApplication
 public class CourseController {
 
     CourseService courseService;

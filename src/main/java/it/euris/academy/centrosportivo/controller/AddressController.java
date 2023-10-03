@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/address")
-@SpringBootApplication
 public class AddressController {
 
 

@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/contacts")
-@SpringBootApplication
 public class ContactController {
 
 
