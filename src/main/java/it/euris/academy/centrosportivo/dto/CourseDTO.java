@@ -4,6 +4,7 @@ import it.euris.academy.centrosportivo.dto.archetype.Dto;
 import it.euris.academy.centrosportivo.dto.archetype.Model;
 import it.euris.academy.centrosportivo.entity.Course;
 import it.euris.academy.centrosportivo.entity.Customer;
+import it.euris.academy.centrosportivo.enums.Sport;
 import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,7 +30,7 @@ public class CourseDTO implements Dto {
 
     private Double price;
 
-    private String sport;
+    private Sport sport;
 
     @Override
     public Model toModel() {

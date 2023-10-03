@@ -3,6 +3,7 @@ package it.euris.academy.centrosportivo.entity;
 import it.euris.academy.centrosportivo.dto.CourseDTO;
 import it.euris.academy.centrosportivo.dto.archetype.Dto;
 import it.euris.academy.centrosportivo.dto.archetype.Model;
+import it.euris.academy.centrosportivo.enums.Sport;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -37,7 +38,8 @@ public class Course implements Model {
     private Double price;
 
     @Column(name = "sport", nullable = false)
-    private String sport;
+    @Enumerated(EnumType.STRING)
+    private Sport sport;
 
     @Override
     public Dto toDto() {

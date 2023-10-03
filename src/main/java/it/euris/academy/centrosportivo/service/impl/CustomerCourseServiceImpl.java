@@ -1,6 +1,7 @@
 package it.euris.academy.centrosportivo.service.impl;
 
 import it.euris.academy.centrosportivo.entity.CustomerCourse;
+import it.euris.academy.centrosportivo.entity.key.CustomerCourseKey;
 import it.euris.academy.centrosportivo.repository.CustomerCourseRepository;
 import it.euris.academy.centrosportivo.service.CustomerCourseService;
 import lombok.AllArgsConstructor;
@@ -25,12 +26,12 @@ public class CustomerCourseServiceImpl implements CustomerCourseService {
     }
 
     @Override
-    public void deleteById(Long idCustomerCourse) {
+    public void deleteById(CustomerCourseKey idCustomerCourse) {
         customerCourseRepository.deleteById(idCustomerCourse);
     }
 
     @Override
-    public CustomerCourse findById(Long idCustomerCourse) {
+    public CustomerCourse findById(CustomerCourseKey idCustomerCourse) {
         return customerCourseRepository.findById(idCustomerCourse).orElse(CustomerCourse.builder().build());
     }
 }

@@ -4,6 +4,7 @@ import it.euris.academy.centrosportivo.dto.CustomerCourseDTO;
 import it.euris.academy.centrosportivo.dto.CustomerDTO;
 import it.euris.academy.centrosportivo.entity.Customer;
 import it.euris.academy.centrosportivo.entity.CustomerCourse;
+import it.euris.academy.centrosportivo.entity.key.CustomerCourseKey;
 import it.euris.academy.centrosportivo.service.CustomerCourseService;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -37,12 +38,12 @@ public class CustomerCourseController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCustomerCourse(@PathVariable("id") Long idCustomerCourse) {
+    public void deleteCustomerCourse(@PathVariable("id") CustomerCourseKey idCustomerCourse) {
         customerCourseService.deleteById(idCustomerCourse);
     }
 
     @GetMapping("/{id}")
-    public CustomerCourse getCustomerCourseById(@PathVariable("id") Long idCustomerCourse) {
+    public CustomerCourse getCustomerCourseById(@PathVariable("id") CustomerCourseKey idCustomerCourse) {
         return customerCourseService.findById(idCustomerCourse);
     }
 
