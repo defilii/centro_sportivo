@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 public class CustomerDTO implements Dto {
 
 
-  private BigInteger id;
+  private Long id;
 
   private LocalDateTime birth_date;
 
@@ -35,13 +35,24 @@ public class CustomerDTO implements Dto {
 
     return Customer
         .builder()
+            .name(name)
+            .surname(surname)
+            .tax_code(tax_code)
+            .birth_date(birth_date)
+        .build();
+  }
+
+  public Model toModelUpdate() {
+
+    return Customer
+            .builder()
             .id(id)
             .deleted(deleted)
             .name(name)
             .surname(surname)
             .tax_code(tax_code)
             .birth_date(birth_date)
-        .build();
+            .build();
   }
 
 }

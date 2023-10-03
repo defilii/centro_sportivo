@@ -26,12 +26,12 @@ public class CustomerServiceImpl implements CustomerService {
   }
 
   @Override
-  public void deleteById(BigInteger idCustomer) {
+  public void deleteById(Long idCustomer) {
     customerRepository.deleteById(idCustomer);
   }
 
   @Override
-  public Customer findById(BigInteger idCustomer) {
+  public Customer findById(Long idCustomer) {
     return customerRepository.findById(idCustomer).orElse(Customer.builder().build());
   }
 

@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 @Builder
 public class AddressDTO implements Dto{
 
-    private BigInteger id;
+    private Long id;
 
     private Boolean deleted = false;
 
@@ -42,8 +42,8 @@ public class AddressDTO implements Dto{
     public Model toModel() {
         return Address.builder()
 
-                .deleted(deleted)
-                .id(id)
+//                .deleted(deleted)
+//                .id(id)
                 .address(address)
                 .city(city)
                 .nation(nation)

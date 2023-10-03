@@ -25,12 +25,12 @@ public class CustomerCourseServiceImpl implements CustomerCourseService {
     }
 
     @Override
-    public void deleteById(BigInteger idCustomerCourse) {
+    public void deleteById(Long idCustomerCourse) {
         customerCourseRepository.deleteById(idCustomerCourse);
     }
 
     @Override
-    public CustomerCourse findById(BigInteger idCustomerCourse) {
+    public CustomerCourse findById(Long idCustomerCourse) {
         return customerCourseRepository.findById(idCustomerCourse).orElse(CustomerCourse.builder().build());
     }
 }

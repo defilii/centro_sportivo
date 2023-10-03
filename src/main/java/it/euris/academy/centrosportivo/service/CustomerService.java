@@ -10,7 +10,7 @@ public interface CustomerService {
 
   Customer save(Customer customer);
 
-  void deleteById(BigInteger idCustomer);
+  void deleteById(Long idCustomer);
 
-  Customer findById(BigInteger idCustomer);
+  Customer findById(Long idCustomer);
 }

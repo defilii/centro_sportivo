@@ -11,7 +11,7 @@ public interface CourseService {
 
     Course save(Course course);
 
-    void deleteById(BigInteger idCourse);
+    void deleteById(Long idCourse);
 
-    Course findById(BigInteger idCourse);
+    Course findById(Long idCourse);
 }

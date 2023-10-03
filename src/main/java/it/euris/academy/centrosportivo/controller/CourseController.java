@@ -36,12 +36,12 @@ public class CourseController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCourse(@PathVariable("id") BigInteger idCourse) {
+    public void deleteCourse(@PathVariable("id") Long idCourse) {
         courseService.deleteById(idCourse);
     }
 
     @GetMapping("/{id}")
-    public Course getCourseById(@PathVariable("id") BigInteger idCourse) {
+    public Course getCourseById(@PathVariable("id") Long idCourse) {
         return courseService.findById(idCourse);
     }
 

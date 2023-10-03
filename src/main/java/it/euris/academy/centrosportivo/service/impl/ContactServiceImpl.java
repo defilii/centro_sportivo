@@ -25,12 +25,12 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public void deleteById(BigInteger idContact) {
+    public void deleteById(Long idContact) {
         contactRepository.deleteById(idContact);
     }
 
     @Override
-    public Contact findById(BigInteger idContact) {
+    public Contact findById(Long idContact) {
         return contactRepository.findById(idContact).orElse(Contact.builder().build());
     }
 }

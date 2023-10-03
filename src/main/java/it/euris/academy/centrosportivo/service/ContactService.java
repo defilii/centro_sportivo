@@ -11,7 +11,7 @@ public interface ContactService {
 
     Contact save(Contact contact);
 
-    void deleteById(BigInteger idContact);
+    void deleteById(Long idContact);
 
-    Contact findById(BigInteger idContact);
+    Contact findById(Long idContact);
 }

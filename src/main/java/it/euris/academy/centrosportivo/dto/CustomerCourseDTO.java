@@ -25,13 +25,13 @@ public class CustomerCourseDTO implements Dto{
 
     private Boolean deleted;
 
-    private BigInteger id;
+    private Long id;
 
     @Override
     public Model toModel() {
         return CustomerCourse.builder()
-                .id(id)
-                .deleted(deleted)
+//                .id(id)
+//                .deleted(deleted)
                 .customer(customer)
                 .course(course)
                 .build();

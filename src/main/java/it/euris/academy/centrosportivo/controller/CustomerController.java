@@ -35,15 +35,21 @@ public class CustomerController {
   public Customer updateCustomer(@RequestBody CustomerDTO customerDTO){
     Customer customer = (Customer) customerDTO.toModel();
     return customerService.save(customer);
+
+//    Customer customerToUpdate = (Customer) customerService.findAll().stream().filter(customer -> customer.getId().equals(customerDTO.getId()));
+//    customerToUpdate.setSurname(customerDTO.getSurname());
+//    customerToUpdate.setName(customerDTO.getName());
+//    customerToUpdate.setTax_code(customerDTO.getTax_code());
+//    return customerService.save(customerDTO);
   }
 
   @DeleteMapping("/{id}")
-  public void deleteCustomer(@PathVariable("id") BigInteger idCustomer) {
+  public void deleteCustomer(@PathVariable("id") Long idCustomer) {
     customerService.deleteById(idCustomer);
   }
 
   @GetMapping("/{id}")
-  public Customer getCustomerById(@PathVariable("id") BigInteger idCustomer) {
+  public Customer getCustomerById(@PathVariable("id") Long idCustomer) {
     return customerService.findById(idCustomer);
   }
 

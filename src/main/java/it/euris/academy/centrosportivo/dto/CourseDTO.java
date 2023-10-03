@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @Builder
 public class CourseDTO implements Dto {
 
-    private BigInteger id;
+    private Long id;
 
     private Boolean deleted = false;
 
@@ -34,8 +34,8 @@ public class CourseDTO implements Dto {
     @Override
     public Model toModel() {
         return Course.builder()
-                .deleted(deleted)
-                .id(id)
+//                .deleted(deleted)
+//                .id(id)
                 .sport(sport)
                 .difficulty(difficulty)
                 .price(price)

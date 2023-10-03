@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Builder
 public class ContactDTO implements Dto{
 
-    private BigInteger id;
+    private Long id;
 
     private Boolean deleted = false;
 
@@ -32,8 +32,8 @@ public class ContactDTO implements Dto{
     @Override
     public Model toModel() {
         return Contact.builder()
-                .deleted(deleted)
-                .id(id)
+//                .deleted(deleted)
+//                .id(id)
                 .contact_type(contact_type)
                 .value(value)
                 .customer(customer)

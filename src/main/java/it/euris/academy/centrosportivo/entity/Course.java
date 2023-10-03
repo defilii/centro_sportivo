@@ -21,7 +21,7 @@ public class Course implements Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private BigInteger id;
+    private Long id;
 
     @Column(name = "deleted", nullable = false)
     @Builder.Default

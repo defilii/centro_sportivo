@@ -12,7 +12,7 @@ public interface CustomerCourseService {
 
     CustomerCourse save(CustomerCourse customerCourse);
 
-    void deleteById(BigInteger idCustomerCourse);
+    void deleteById(Long idCustomerCourse);
 
-    CustomerCourse findById(BigInteger idCustomerCourse);
+    CustomerCourse findById(Long idCustomerCourse);
 }

@@ -26,12 +26,12 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void deleteById(BigInteger idCourse) {
+    public void deleteById(Long idCourse) {
         courseRepository.deleteById(idCourse);
     }
 
     @Override
-    public Course findById(BigInteger idCourse) {
+    public Course findById(Long idCourse) {
         return courseRepository.findById(idCourse).orElse(Course.builder().build());
     }
 }

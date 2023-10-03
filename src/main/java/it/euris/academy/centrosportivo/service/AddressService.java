@@ -11,7 +11,7 @@ public interface AddressService {
 
     Address save(Address address);
 
-    void deleteById(BigInteger idAddress);
+    void deleteById(Long idAddress);
 
-    Address findById(BigInteger idAddress);
+    Address findById(Long idAddress);
 }

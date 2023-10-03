@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.math.BigInteger;
 
-public interface AddressRepository extends JpaRepository<Address, BigInteger> {
+public interface AddressRepository extends JpaRepository<Address, Long> {
 }
