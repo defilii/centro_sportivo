@@ -49,19 +49,19 @@ public class AddressController {
         return addressService.findById(idAddress);
     }
 
-    @DeleteMapping("/{customer}")
-    public void deleteAddressByCustomer(@PathVariable("customer") Customer customer) {
-        List<Address> matchedContacts = addressService.findAll().stream()
-                .filter(contact -> contact.getCustomer().equals(customer))
+    @DeleteMapping("/customer/{id}")
+    public void deleteAddressByCustomerId(@PathVariable("id") Long customerId)  {
+        List<Address> matchedAddresses = addressService.findAll().stream()
+                .filter(address -> address.getCustomer().getId().equals(customerId))
                 .toList();
-        for (Address matchedContact : matchedContacts) {
-            Long idToDelete = matchedContact.getId();
+        for (Address matchedAddress : matchedAddresses) {
+            Long idToDelete = matchedAddress.getId();
             addressService.deleteById(idToDelete);
         }
     }
 
-    @GetMapping("/{customer}")
-    public List<Address> getAddressByCustomer(@PathVariable("customer") Customer customer) {
-        return addressService.findAll().stream().filter(contact -> contact.getCustomer().equals(customer)).collect(Collectors.toList());
+    @GetMapping("/customer/{id}")
+    public List<Address> getAddressByCustomerId(@PathVariable("id") Long customerId) {
+        return addressService.findAll().stream().filter(address -> address.getCustomer().getId().equals(customerId)).collect(Collectors.toList());
     }
 }

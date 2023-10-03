@@ -1,10 +1,9 @@
 package it.euris.academy.centrosportivo.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import it.euris.academy.centrosportivo.entity.Course;
+import it.euris.academy.centrosportivo.entity.Contact;
 import it.euris.academy.centrosportivo.entity.Customer;
-import it.euris.academy.centrosportivo.enums.Sport;
-import it.euris.academy.centrosportivo.service.CourseService;
+import it.euris.academy.centrosportivo.service.ContactService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -22,75 +21,55 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-
-@WebMvcTest(CourseController.class)
-class CourseControllerTest {
-
+@WebMvcTest(ContactController.class)
+public class ContactControllerTest {
     @Autowired
     MockMvc mockMvc;
 
     @MockBean
-    CourseService courseService;
+    ContactService contactService;
 
     @Autowired
     private ObjectMapper objectMapper;
 
     @Test
-    void shouldGetOneCourse() throws Exception {
+    void shouldGetOneContact() throws Exception {
 
         Long id = 1L;
-        String denomination = "null";
-        Sport sport = Sport.Calcio;
-        Double price = 1.0;
-        String difficulty = "hard";
-        Course course = Course
+
+        Contact contact = Contact
                 .builder()
                 .id(id)
-                .denomination(denomination)
-                .sport(sport)
-                .price(price)
-                .difficulty(difficulty)
                 .build();
 
-        List<Course> courses = List.of(course);
+        List<Contact> contacts = List.of(contact);
 
-        when(courseService.findAll()).thenReturn(courses);
+        when(contactService.findAll()).thenReturn(contacts);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/courses"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/contacts"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$.length()").value(1))
-                .andExpect(jsonPath("$[0].denomination").value(denomination))
-                .andExpect(jsonPath("$[0].sport").value(sport.toString()))
-                .andExpect(jsonPath("$[0].price").value(price))
+                .andExpect(jsonPath("$[0].id").value(id))
         ;
     }
 
     @Test
-    void shouldGetTestById() throws Exception {
+    void shouldGetContactById() throws Exception {
 
         Long id = 1L;
-        String denomination = "null";
-        Sport sport = Sport.Calcio;
-        Double price = 1.0;
-        String difficulty = "hard";
-        Course course = Course
+
+        Contact contact = Contact
                 .builder()
                 .id(id)
-                .denomination(denomination)
-                .sport(sport)
-                .price(price)
-                .difficulty(difficulty)
                 .build();
 
-        List<Course> courses = List.of(course);
 
-        when(courseService.findById(id)).thenReturn(course);
+        when(contactService.findById(id)).thenReturn(contact);
 
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/courses/{id}", id)).
+        mockMvc.perform(MockMvcRequestBuilders.get("/contacts/{id}", id)).
                 andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -98,37 +77,67 @@ class CourseControllerTest {
         ;
     }
 
-
     @Test
-    void shouldInsertATest() throws Exception {
+    void shouldInsertAContact() throws Exception {
 
         Long id = 1L;
-        String denomination = "null";
-        Sport sport = Sport.Calcio;
-        Double price = 1.0;
-        String difficulty = "hard";
-        Course course = Course
+
+        Contact contact = Contact
                 .builder()
                 .id(id)
-                .denomination(denomination)
-                .sport(sport)
-                .price(price)
-                .difficulty(difficulty)
                 .build();
 
-        when(courseService.save(any())).thenReturn(course);
+        when(contactService.save(any())).thenReturn(contact);
 
-        mockMvc.perform(post("/courses")
+        mockMvc.perform(post("/contacts")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(course)))
+                        .content(objectMapper.writeValueAsString(contact)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.sport").value(sport.toString()))
-                .andExpect(jsonPath("$.denomination").value(denomination));
+                .andExpect(jsonPath("$.id").value(id))
+        ;
     }
 
+    @Test
+    void shouldGetContactByCustomerId() throws Exception {
+
+        String firstName = "Mario";
+        String lastName = "Rossi";
+        Long idCustomer = 1L;
+        String taxcode = "1234";
+
+        Customer customer = Customer
+                .builder()
+                .id(idCustomer)
+                .name(firstName)
+                .surname(lastName)
+                .tax_code(taxcode)
+                .build();
+
+
+        Long id = 1L;
+
+        Contact contact = Contact
+                .builder()
+                .id(id)
+                .customer(customer)
+                .build();
+
+        List<Contact> contacts = List.of(contact);
+
+        when(contactService.findAll()).thenReturn(contacts);
+
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/contacts/customer/{id}", idCustomer)).
+                andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$.length()").value(1))
+        ;
+    }
 
 
 }

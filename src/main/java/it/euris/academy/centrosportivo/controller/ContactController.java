@@ -52,10 +52,10 @@ public class ContactController {
         return contactService.findById(idContact);
     }
 
-    @DeleteMapping("/{customer}")
-    public void deleteContactByCustomer(@PathVariable("customer") Customer customer) {
+    @DeleteMapping("/customer/{id}")
+    public void deleteContactByCustomerId(@PathVariable("customerId") Long customerId) {
         List<Contact> matchedContacts = contactService.findAll().stream()
-                .filter(contact -> contact.getCustomer().equals(customer))
+                .filter(contact -> contact.getCustomer().getId().equals(customerId))
                 .toList();
         for (Contact matchedContact : matchedContacts) {
             Long idToDelete = matchedContact.getId();
@@ -63,8 +63,8 @@ public class ContactController {
         }
     }
 
-    @GetMapping("/{customer}")
-    public List<Contact> getContactByCustomer(@PathVariable("customer") Customer customer) {
-        return contactService.findAll().stream().filter(contact -> contact.getCustomer().equals(customer)).collect(Collectors.toList());
+    @GetMapping("/customer/{id}")
+    public List<Contact> getContactByCustomerId(@PathVariable("id") Long customerId) {
+        return contactService.findAll().stream().filter(contact -> contact.getCustomer().getId().equals(customerId)).collect(Collectors.toList());
     }
 }
