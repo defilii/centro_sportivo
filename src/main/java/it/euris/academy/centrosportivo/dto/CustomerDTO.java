@@ -7,8 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 
 @Data
@@ -31,10 +29,11 @@ public class CustomerDTO implements Dto {
   private String tax_code;
 
   @Override
-  public Model toModel() {
+  public Customer toModel() {
 
     return Customer
         .builder()
+            .id(id)
             .name(name)
             .surname(surname)
             .tax_code(tax_code)
@@ -42,17 +41,5 @@ public class CustomerDTO implements Dto {
         .build();
   }
 
-  public Model toModelUpdate() {
-
-    return Customer
-            .builder()
-            .id(id)
-            .deleted(deleted)
-            .name(name)
-            .surname(surname)
-            .tax_code(tax_code)
-            .birth_date(birth_date)
-            .build();
-  }
 
 }

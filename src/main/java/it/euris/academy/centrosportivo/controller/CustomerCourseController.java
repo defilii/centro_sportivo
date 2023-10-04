@@ -1,16 +1,17 @@
 package it.euris.academy.centrosportivo.controller;
 
 import it.euris.academy.centrosportivo.dto.CustomerCourseDTO;
-import it.euris.academy.centrosportivo.dto.CustomerDTO;
 import it.euris.academy.centrosportivo.entity.Customer;
 import it.euris.academy.centrosportivo.entity.CustomerCourse;
 import it.euris.academy.centrosportivo.entity.key.CustomerCourseKey;
+import it.euris.academy.centrosportivo.exceptions.IdMustBeNullException;
+import it.euris.academy.centrosportivo.exceptions.IdMustNotBeNullException;
 import it.euris.academy.centrosportivo.service.CustomerCourseService;
 import lombok.AllArgsConstructor;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.math.BigInteger;
 import java.util.List;
 
 @AllArgsConstructor
@@ -21,30 +22,42 @@ public class CustomerCourseController {
     CustomerCourseService customerCourseService;
 
     @GetMapping
-    public List<CustomerCourse> getAllCustomerCourse() {
-        return customerCourseService.findAll();
+    public List<CustomerCourseDTO> getAllCustomerCourse() {
+        return customerCourseService.findAll().stream().map(CustomerCourse::toDto).toList();
     }
 
     @PostMapping
-    public CustomerCourse saveCustomerCourse(@RequestBody CustomerCourseDTO customerCourseDTO) {
-        CustomerCourse customerCourse = (CustomerCourse) customerCourseDTO.toModel();
-        return customerCourseService.save(customerCourse);
+    public CustomerCourseDTO saveCustomerCourse(@RequestBody CustomerCourseDTO customerCourseDTO) throws IdMustBeNullException {
+        try{
+            CustomerCourse customerCourse = customerCourseDTO.toModel();
+            return customerCourseService.insert(customerCourse).toDto();
+        }
+        catch(IdMustBeNullException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, e.getMessage());
+        }
     }
 
     @PutMapping
-    public CustomerCourse updateCustomerCourse(@RequestBody CustomerCourseDTO customerCourseDTO) {
-        CustomerCourse customerCourse = (CustomerCourse) customerCourseDTO.toModel();
-        return customerCourseService.save(customerCourse);
+    public CustomerCourseDTO updateCustomerCourse(@RequestBody CustomerCourseDTO customerCourseDTO) throws IdMustBeNullException, IdMustNotBeNullException {
+        try{
+            CustomerCourse customerCourse = customerCourseDTO.toModel();
+            return customerCourseService.update(customerCourse).toDto();
+        }
+        catch(IdMustBeNullException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCustomerCourse(@PathVariable("id") CustomerCourseKey idCustomerCourse) {
-        customerCourseService.deleteById(idCustomerCourse);
+    public Boolean deleteCustomerCourse(@PathVariable("id") CustomerCourseKey idCustomerCourse) {
+        return customerCourseService.deleteById(idCustomerCourse);
     }
 
     @GetMapping("/{id}")
-    public CustomerCourse getCustomerCourseById(@PathVariable("id") CustomerCourseKey idCustomerCourse) {
-        return customerCourseService.findById(idCustomerCourse);
+    public CustomerCourseDTO getCustomerCourseById(@PathVariable("id") CustomerCourseKey idCustomerCourse) {
+        return customerCourseService.findById(idCustomerCourse).toDto();
     }
 
 }

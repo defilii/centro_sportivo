@@ -27,7 +27,7 @@ public class CustomerCourseDTO implements Dto{
     private CustomerCourseKey id;
 
     @Override
-    public Model toModel() {
+    public CustomerCourse toModel() {
         return CustomerCourse.builder()
                 .id(id)
                 .deleted(deleted)

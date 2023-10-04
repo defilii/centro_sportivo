@@ -42,7 +42,7 @@ public class Course implements Model {
     private Sport sport;
 
     @Override
-    public Dto toDto() {
+    public CourseDTO toDto() {
         return CourseDTO
                 .builder()
                 .id(id)

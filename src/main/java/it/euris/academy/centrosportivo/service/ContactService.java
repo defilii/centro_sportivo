@@ -1,17 +1,18 @@
 package it.euris.academy.centrosportivo.service;
 
 import it.euris.academy.centrosportivo.entity.Contact;
-import it.euris.academy.centrosportivo.entity.Course;
+import it.euris.academy.centrosportivo.exceptions.IdMustBeNullException;
+import it.euris.academy.centrosportivo.exceptions.IdMustNotBeNullException;
 
-import java.math.BigInteger;
 import java.util.List;
 
 public interface ContactService {
     List<Contact> findAll();
 
-    Contact save(Contact contact);
+    Contact insert(Contact contact) throws IdMustBeNullException;
+    Contact update(Contact contact) throws IdMustNotBeNullException;
 
-    void deleteById(Long idContact);
+    Boolean deleteById(Long idContact);
 
     Contact findById(Long idContact);
 }

@@ -87,7 +87,7 @@ public class ContactControllerTest {
                 .id(id)
                 .build();
 
-        when(contactService.save(any())).thenReturn(contact);
+        when(contactService.insert(any())).thenReturn(contact);
 
         mockMvc.perform(post("/contacts")
                         .contentType(MediaType.APPLICATION_JSON)

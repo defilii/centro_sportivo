@@ -33,10 +33,10 @@ public class CourseDTO implements Dto {
     private Sport sport;
 
     @Override
-    public Model toModel() {
+    public Course toModel() {
         return Course.builder()
-//                .deleted(deleted)
-//                .id(id)
+                .deleted(deleted)
+                .id(id)
                 .sport(sport)
                 .difficulty(difficulty)
                 .price(price)

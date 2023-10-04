@@ -36,7 +36,7 @@ public class CustomerCourse implements Model {
     private Boolean deleted = false;
 
     @Override
-    public Dto toDto() {
+    public CustomerCourseDTO toDto() {
         return CustomerCourseDTO
                 .builder()
                 .id(id)

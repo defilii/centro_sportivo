@@ -89,7 +89,7 @@ public class AddressControllerTest {
                 .build();
 
 
-        when(addressService.save(any())).thenReturn(address);
+        when(addressService.insert(any())).thenReturn(address);
 
         mockMvc.perform(post("/addresses")
                         .contentType(MediaType.APPLICATION_JSON)

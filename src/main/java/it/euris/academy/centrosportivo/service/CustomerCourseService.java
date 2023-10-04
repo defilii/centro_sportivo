@@ -1,19 +1,19 @@
 package it.euris.academy.centrosportivo.service;
 
-import it.euris.academy.centrosportivo.entity.Course;
-import it.euris.academy.centrosportivo.entity.Customer;
 import it.euris.academy.centrosportivo.entity.CustomerCourse;
 import it.euris.academy.centrosportivo.entity.key.CustomerCourseKey;
+import it.euris.academy.centrosportivo.exceptions.IdMustBeNullException;
+import it.euris.academy.centrosportivo.exceptions.IdMustNotBeNullException;
 
-import java.math.BigInteger;
 import java.util.List;
 
 public interface CustomerCourseService {
     List<CustomerCourse> findAll();
 
-    CustomerCourse save(CustomerCourse customerCourse);
+    CustomerCourse insert(CustomerCourse customerCourse) throws IdMustBeNullException;
+    CustomerCourse update(CustomerCourse customerCourse) throws IdMustBeNullException, IdMustNotBeNullException;
 
-    void deleteById(CustomerCourseKey idCustomerCourse);
+    Boolean deleteById(CustomerCourseKey idCustomerCourse);
 
     CustomerCourse findById(CustomerCourseKey idCustomerCourse);
 }

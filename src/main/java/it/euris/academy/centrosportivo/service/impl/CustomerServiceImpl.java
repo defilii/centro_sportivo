@@ -1,6 +1,8 @@
 package it.euris.academy.centrosportivo.service.impl;
 
 import it.euris.academy.centrosportivo.entity.Customer;
+import it.euris.academy.centrosportivo.exceptions.IdMustBeNullException;
+import it.euris.academy.centrosportivo.exceptions.IdMustNotBeNullException;
 import it.euris.academy.centrosportivo.repository.CustomerRepository;
 import it.euris.academy.centrosportivo.service.CustomerService;
 import lombok.AllArgsConstructor;
@@ -21,13 +23,25 @@ public class CustomerServiceImpl implements CustomerService {
   }
 
   @Override
-  public Customer save(Customer customer) {
+  public Customer insert(Customer customer) throws IdMustBeNullException {
+    if(customer.getId() != null){
+      throw new IdMustBeNullException();
+    }
     return customerRepository.save(customer);
   }
 
   @Override
-  public void deleteById(Long idCustomer) {
+  public Customer update(Customer customer) throws IdMustNotBeNullException {
+    if(customer.getId() == null){
+      throw new IdMustNotBeNullException();
+    }
+    return customerRepository.save(customer);
+  }
+
+  @Override
+  public Boolean deleteById(Long idCustomer) {
     customerRepository.deleteById(idCustomer);
+    return customerRepository.findById(idCustomer).isEmpty();
   }
 
   @Override

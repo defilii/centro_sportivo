@@ -6,6 +6,8 @@ import it.euris.academy.centrosportivo.repository.CourseRepository;
 import it.euris.academy.centrosportivo.service.CourseService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import it.euris.academy.centrosportivo.exceptions.IdMustBeNullException;
+import it.euris.academy.centrosportivo.exceptions.IdMustNotBeNullException;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -21,13 +23,25 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course save(Course course) {
+    public Course insert(Course course) throws IdMustBeNullException {
+        if(course.getId() != null){
+            throw new IdMustBeNullException();
+        }
         return courseRepository.save(course);
     }
 
     @Override
-    public void deleteById(Long idCourse) {
+    public Course update(Course course) throws IdMustNotBeNullException {
+        if(course.getId() == null){
+            throw new IdMustNotBeNullException();
+        }
+        return courseRepository.save(course);
+    }
+
+    @Override
+    public Boolean deleteById(Long idCourse) {
         courseRepository.deleteById(idCourse);
+        return courseRepository.findById(idCourse).isEmpty();
     }
 
     @Override

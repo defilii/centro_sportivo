@@ -2,7 +2,6 @@ package it.euris.academy.centrosportivo.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.euris.academy.centrosportivo.entity.Course;
-import it.euris.academy.centrosportivo.entity.Customer;
 import it.euris.academy.centrosportivo.enums.Sport;
 import it.euris.academy.centrosportivo.service.CourseService;
 import org.junit.jupiter.api.Test;
@@ -116,7 +115,7 @@ class CourseControllerTest {
                 .difficulty(difficulty)
                 .build();
 
-        when(courseService.save(any())).thenReturn(course);
+        when(courseService.insert(any())).thenReturn(course);
 
         mockMvc.perform(post("/courses")
                         .contentType(MediaType.APPLICATION_JSON)

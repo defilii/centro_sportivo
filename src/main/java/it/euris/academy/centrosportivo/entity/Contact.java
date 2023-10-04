@@ -39,7 +39,7 @@ public class Contact implements Model {
     private Customer customer;
 
     @Override
-    public Dto toDto() {
+    public ContactDTO toDto() {
         return ContactDTO.builder()
                 .id(id)
                 .deleted(deleted)

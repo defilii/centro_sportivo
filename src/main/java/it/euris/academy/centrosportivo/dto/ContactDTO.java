@@ -30,10 +30,10 @@ public class ContactDTO implements Dto{
 
     private Customer customer;
     @Override
-    public Model toModel() {
+    public Contact toModel() {
         return Contact.builder()
-//                .deleted(deleted)
-//                .id(id)
+                .deleted(deleted)
+                .id(id)
                 .contact_type(contact_type)
                 .value(value)
                 .customer(customer)

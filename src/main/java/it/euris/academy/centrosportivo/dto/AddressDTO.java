@@ -39,11 +39,11 @@ public class AddressDTO implements Dto{
 
     private Customer customer;
     @Override
-    public Model toModel() {
+    public Address toModel() {
         return Address.builder()
 
-//                .deleted(deleted)
-//                .id(id)
+                .deleted(deleted)
+                .id(id)
                 .address(address)
                 .city(city)
                 .nation(nation)

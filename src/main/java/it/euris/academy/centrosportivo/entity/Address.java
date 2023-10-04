@@ -47,7 +47,7 @@ public class Address implements Model {
     @JoinColumn(name = "customer_id")
     private Customer customer;
     @Override
-    public Dto toDto() {
+    public AddressDTO toDto() {
         return AddressDTO.builder()
                 .id(id)
                 .deleted(deleted)

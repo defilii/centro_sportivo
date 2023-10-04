@@ -11,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.math.BigInteger;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -110,7 +109,7 @@ class CustomerControllerTest {
             .tax_code(taxcode)
             .build();
 
-    when(customerService.save(any())).thenReturn(customer);
+    when(customerService.insert(any())).thenReturn(customer);
 
     mockMvc.perform(post("/customers")
             .contentType(MediaType.APPLICATION_JSON)

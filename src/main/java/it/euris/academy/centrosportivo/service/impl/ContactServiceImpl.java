@@ -5,6 +5,8 @@ import it.euris.academy.centrosportivo.repository.ContactRepository;
 import it.euris.academy.centrosportivo.service.ContactService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import it.euris.academy.centrosportivo.exceptions.IdMustBeNullException;
+import it.euris.academy.centrosportivo.exceptions.IdMustNotBeNullException;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -20,13 +22,25 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public Contact save(Contact contact) {
+    public Contact insert(Contact contact) throws IdMustBeNullException {
+        if(contact.getId() != null){
+            throw new IdMustBeNullException();
+        }
         return contactRepository.save(contact);
     }
 
     @Override
-    public void deleteById(Long idContact) {
+    public Contact update(Contact contact) throws IdMustNotBeNullException {
+        if(contact.getId() == null){
+            throw new IdMustNotBeNullException();
+        }
+        return contactRepository.save(contact);
+    }
+
+    @Override
+    public Boolean deleteById(Long idContact) {
         contactRepository.deleteById(idContact);
+        return contactRepository.findById(idContact).isEmpty();
     }
 
     @Override

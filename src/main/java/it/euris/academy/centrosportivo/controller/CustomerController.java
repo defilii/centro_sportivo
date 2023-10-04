@@ -1,15 +1,17 @@
 package it.euris.academy.centrosportivo.controller;
 
-import io.swagger.v3.oas.annotations.Operation;
 import it.euris.academy.centrosportivo.dto.CustomerDTO;
 import it.euris.academy.centrosportivo.entity.Customer;
+import it.euris.academy.centrosportivo.exceptions.IdMustBeNullException;
+import it.euris.academy.centrosportivo.exceptions.IdMustNotBeNullException;
 import it.euris.academy.centrosportivo.service.CustomerService;
 import lombok.AllArgsConstructor;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.math.BigInteger;
 import java.util.List;
+import java.util.function.Function;
 
 @AllArgsConstructor
 @RestController
@@ -20,36 +22,42 @@ public class CustomerController {
   CustomerService customerService;
 
   @GetMapping
-  public List<Customer> getAllCustomers() {
-    return customerService.findAll();
+  public List<CustomerDTO> getAllCustomers() {
+    return customerService.findAll().stream().map(Customer::toDto).toList();
   }
 
   @PostMapping
-  public Customer saveCustomer(@RequestBody CustomerDTO customerDTO) {
-    Customer customer = (Customer) customerDTO.toModel();
-    return customerService.save(customer);
+  public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO) {
+    try{
+      Customer customer = customerDTO.toModel();
+      return customerService.insert(customer).toDto();
+    }
+    catch(IdMustBeNullException e) {
+      throw new ResponseStatusException(
+              HttpStatus.BAD_REQUEST, e.getMessage());
+    }
   }
 
   @PutMapping
-  public Customer updateCustomer(@RequestBody CustomerDTO customerDTO){
-    Customer customer = (Customer) customerDTO.toModel();
-    return customerService.save(customer);
-
-//    Customer customerToUpdate = (Customer) customerService.findAll().stream().filter(customer -> customer.getId().equals(customerDTO.getId()));
-//    customerToUpdate.setSurname(customerDTO.getSurname());
-//    customerToUpdate.setName(customerDTO.getName());
-//    customerToUpdate.setTax_code(customerDTO.getTax_code());
-//    return customerService.save(customerDTO);
+  public CustomerDTO updateCustomer(@RequestBody CustomerDTO customerDTO) {
+    try{
+      Customer customer = customerDTO.toModel();
+      return customerService.update(customer).toDto();
+    }
+    catch(IdMustNotBeNullException e) {
+      throw new ResponseStatusException(
+              HttpStatus.BAD_REQUEST, e.getMessage());
+    }
   }
 
   @DeleteMapping("/{id}")
-  public void deleteCustomer(@PathVariable("id") Long idCustomer) {
-    customerService.deleteById(idCustomer);
+  public Boolean deleteCustomer(@PathVariable("id") Long idCustomer) {
+    return customerService.deleteById(idCustomer);
   }
 
   @GetMapping("/{id}")
-  public Customer getCustomerById(@PathVariable("id") Long idCustomer) {
-    return customerService.findById(idCustomer);
+  public CustomerDTO getCustomerById(@PathVariable("id") Long idCustomer) {
+    return customerService.findById(idCustomer).toDto();
   }
 
 }

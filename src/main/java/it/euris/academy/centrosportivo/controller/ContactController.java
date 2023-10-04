@@ -1,19 +1,16 @@
 package it.euris.academy.centrosportivo.controller;
 
-import io.swagger.v3.oas.annotations.Operation;
-import it.euris.academy.centrosportivo.dto.AddressDTO;
 import it.euris.academy.centrosportivo.dto.ContactDTO;
-import it.euris.academy.centrosportivo.dto.CustomerCourseDTO;
-import it.euris.academy.centrosportivo.entity.Address;
 import it.euris.academy.centrosportivo.entity.Contact;
-import it.euris.academy.centrosportivo.entity.Customer;
-import it.euris.academy.centrosportivo.service.AddressService;
+import it.euris.academy.centrosportivo.entity.Course;
+import it.euris.academy.centrosportivo.exceptions.IdMustBeNullException;
+import it.euris.academy.centrosportivo.exceptions.IdMustNotBeNullException;
 import it.euris.academy.centrosportivo.service.ContactService;
 import lombok.AllArgsConstructor;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.math.BigInteger;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,45 +23,61 @@ public class ContactController {
     ContactService contactService;
 
     @GetMapping
-    public List<Contact> getAllContacts() {
-        return contactService.findAll();
+    public List<ContactDTO> getAllContacts() {
+        return contactService.findAll().stream().map(Contact::toDto).toList();
     }
 
     @PostMapping
-    public Contact saveContact(@RequestBody ContactDTO contactDTO) {
-        Contact contact = (Contact) contactDTO.toModel();
-        return contactService.save(contact);
-    }
-
-    @PutMapping
-    public Contact updateContact(@RequestBody ContactDTO contactDTO) {
-        Contact contact = (Contact) contactDTO.toModel();
-        return contactService.save(contact);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteContact(@PathVariable("id") Long idContact) {
-        contactService.deleteById(idContact);
-    }
-
-    @GetMapping("/{id}")
-    public Contact getContactById(@PathVariable("id") Long idContact) {
-        return contactService.findById(idContact);
-    }
-
-    @DeleteMapping("/customer/{id}")
-    public void deleteContactByCustomerId(@PathVariable("customerId") Long customerId) {
-        List<Contact> matchedContacts = contactService.findAll().stream()
-                .filter(contact -> contact.getCustomer().getId().equals(customerId))
-                .toList();
-        for (Contact matchedContact : matchedContacts) {
-            Long idToDelete = matchedContact.getId();
-            contactService.deleteById(idToDelete);
+    public ContactDTO saveContact(@RequestBody ContactDTO contactDTO) {
+        try{
+            Contact contact = contactDTO.toModel();
+            return contactService.insert(contact).toDto();
+        }
+        catch(IdMustBeNullException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
+    @PutMapping
+    public ContactDTO updateContact(@RequestBody ContactDTO contactDTO) {
+        try{
+            Contact contact = contactDTO.toModel();
+            return contactService.update(contact).toDto();
+        }
+        catch(IdMustNotBeNullException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public Boolean deleteContact(@PathVariable("id") Long idContact) {
+        return contactService.deleteById(idContact);
+    }
+
+    @GetMapping("/{id}")
+    public ContactDTO getContactById(@PathVariable("id") Long idContact) {
+        return contactService.findById(idContact).toDto();
+    }
+
+    @DeleteMapping("/customer/{id}")
+    public Boolean deleteContactByCustomerId(@PathVariable("customerId") Long customerId) {
+        List<Contact> matchedContacts = contactService.findAll().stream()
+                .filter(contact -> contact.getCustomer().getId().equals(customerId))
+                .toList();
+        Integer contactsThatWerentDeleted = matchedContacts.size();
+        for (Contact matchedContact : matchedContacts) {
+            Long idToDelete = matchedContact.getId();
+            contactService.deleteById(idToDelete);
+            contactsThatWerentDeleted--;
+        }
+        return contactsThatWerentDeleted == 0;
+
+    }
+
     @GetMapping("/customer/{id}")
-    public List<Contact> getContactByCustomerId(@PathVariable("id") Long customerId) {
-        return contactService.findAll().stream().filter(contact -> contact.getCustomer().getId().equals(customerId)).collect(Collectors.toList());
+    public List<ContactDTO> getContactByCustomerId(@PathVariable("id") Long customerId) {
+        return contactService.findAll().stream().map(Contact::toDto).filter(contact -> contact.getCustomer().getId().equals(customerId)).collect(Collectors.toList());
     }
 }

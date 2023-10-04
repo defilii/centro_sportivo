@@ -1,17 +1,18 @@
 package it.euris.academy.centrosportivo.service;
 
 import it.euris.academy.centrosportivo.entity.Address;
-import it.euris.academy.centrosportivo.entity.Contact;
+import it.euris.academy.centrosportivo.exceptions.IdMustBeNullException;
+import it.euris.academy.centrosportivo.exceptions.IdMustNotBeNullException;
 
-import java.math.BigInteger;
 import java.util.List;
 
 public interface AddressService {
     List<Address> findAll();
 
-    Address save(Address address);
+    Address insert(Address address) throws IdMustBeNullException;
+    Address update(Address address) throws IdMustNotBeNullException;
 
-    void deleteById(Long idAddress);
+    Boolean deleteById(Long idAddress);
 
     Address findById(Long idAddress);
 }
